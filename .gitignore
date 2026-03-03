@@ -1,0 +1,9 @@
+.build/
+.claude/
+.swiftpm/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+DerivedData/
+.DS_Store
+SECURITY_FINDINGS.md
+CODE_REVIEW.md
