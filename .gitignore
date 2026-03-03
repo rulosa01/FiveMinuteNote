@@ -2,7 +2,7 @@
 .claude/
 .swiftpm/
 *.xcodeproj/xcuserdata/
-*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/
 DerivedData/
 .DS_Store
 SECURITY_FINDINGS.md
