@@ -7,3 +7,5 @@ DerivedData/
 .DS_Store
 SECURITY_FINDINGS.md
 CODE_REVIEW.md
+TEST_GAPS.md
+.vscode/

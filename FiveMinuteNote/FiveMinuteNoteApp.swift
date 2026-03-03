@@ -61,12 +61,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if let button = statusItem.button {
             button.action = #selector(statusItemClicked)
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
             button.target = self
         }
     }
 
     @objc func statusItemClicked() {
-        toggleNoteWindow()
+        guard let event = NSApp.currentEvent else {
+            toggleNoteWindow()
+            return
+        }
+        let isRightClick = event.type == .rightMouseUp
+            || (event.type == .leftMouseUp && event.modifierFlags.contains(.control))
+        if isRightClick {
+            showStatusMenu()
+        } else {
+            toggleNoteWindow()
+        }
+    }
+
+    func showStatusMenu() {
+        let menu = NSMenu()
+        menu.addItem(NSMenuItem(title: "Quit Five Minute Note", action: #selector(quitApp), keyEquivalent: "q"))
+        statusItem.menu = menu
+        statusItem.button?.performClick(nil)
+        // Clear the menu so left-click goes back to toggle behavior
+        statusItem.menu = nil
+    }
+
+    @objc func quitApp() {
+        NSApp.terminate(nil)
     }
 
     // #4: Only start icon timer when note is active, stop when not needed
