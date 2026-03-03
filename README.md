@@ -54,6 +54,21 @@ cp -R ~/Library/Developer/Xcode/DerivedData/FiveMinuteNote-*/Build/Products/Debu
 
 On first launch, macOS will prompt for **Accessibility** permissions (needed for the global hotkey). Grant access in **System Settings → Privacy & Security → Accessibility**.
 
+## Testing
+
+```bash
+# Run all tests
+xcodebuild test -project FiveMinuteNote.xcodeproj -scheme FiveMinuteNote -configuration Debug
+```
+
+73 unit tests across three suites:
+
+| Suite | Tests | Covers |
+|---|---|---|
+| `NoteStateTests` | 38 | Timer lifecycle, countdown, expiry notification, adaptive interval, keystroke reset, +5m extension, 24h cap, note destruction, date-based accuracy, singleton |
+| `TimerViewTests` | 23 | `M:SS` formatting, ceil rounding, negative clamping, color thresholds (gray → amber → red) |
+| `NoteTextEditorCoordinatorTests` | 12 | 100K character limit, paste rejection, deletion at limit, UTF-16 counting, coordinator flag |
+
 ## Configuration
 
 Edit the top of `FiveMinuteNote/FiveMinuteNoteApp.swift`:

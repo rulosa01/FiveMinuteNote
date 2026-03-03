@@ -9,16 +9,33 @@
 /* Begin PBXBuildFile section */
 		256AAC62F47CCE11E044D70A /* NoteState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F140AFFC3A829903E5FFE1D1 /* NoteState.swift */; };
 		88056FA5AC4C04148E5426D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4381242E302D3F69814DCDD7 /* Assets.xcassets */; };
+		A6A8DA3E63D2CD2AB9D2519B /* TimerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8B65BF19F6BD6C5A1B96CE /* TimerViewTests.swift */; };
 		D27C277251C17150C6E41296 /* FiveMinuteNoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A52AA5AF26C4B8AB8AEA85 /* FiveMinuteNoteApp.swift */; };
 		D536BBDB54A874BC64624872 /* NoteContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AA0AC80F99E898E7D3D760 /* NoteContentView.swift */; };
+		DC17F1A5C19514D7C477E882 /* NoteStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012531F6B596FEF16A28C99A /* NoteStateTests.swift */; };
+		E1A35A304D732BDE64C5AF7D /* NoteTextEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ED4BE8EC2CE4CE4D9A9621 /* NoteTextEditorTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8C0D2C3B51B26264229E4A35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3A94DB1B92A189AECC3CDF2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F390C15CBEF7E3D9DA0F8BC;
+			remoteInfo = FiveMinuteNote;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		012531F6B596FEF16A28C99A /* NoteStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStateTests.swift; sourceTree = "<group>"; };
 		07A52AA5AF26C4B8AB8AEA85 /* FiveMinuteNoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveMinuteNoteApp.swift; sourceTree = "<group>"; };
+		29ED4BE8EC2CE4CE4D9A9621 /* NoteTextEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTextEditorTests.swift; sourceTree = "<group>"; };
 		4381242E302D3F69814DCDD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4A4C9B5BE31C83942E38A7D2 /* FiveMinuteNoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FiveMinuteNoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95AA0AC80F99E898E7D3D760 /* NoteContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteContentView.swift; sourceTree = "<group>"; };
 		96D3104AC2A16E52AE910B42 /* FiveMinuteNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FiveMinuteNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9AC016B18CA5F15F90F7140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CB8B65BF19F6BD6C5A1B96CE /* TimerViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewTests.swift; sourceTree = "<group>"; };
 		F140AFFC3A829903E5FFE1D1 /* NoteState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -39,14 +56,26 @@
 			isa = PBXGroup;
 			children = (
 				96D3104AC2A16E52AE910B42 /* FiveMinuteNote.app */,
+				4A4C9B5BE31C83942E38A7D2 /* FiveMinuteNoteTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		57E6A45E35481E1B70ADA7D4 /* FiveMinuteNoteTests */ = {
+			isa = PBXGroup;
+			children = (
+				012531F6B596FEF16A28C99A /* NoteStateTests.swift */,
+				29ED4BE8EC2CE4CE4D9A9621 /* NoteTextEditorTests.swift */,
+				CB8B65BF19F6BD6C5A1B96CE /* TimerViewTests.swift */,
+			);
+			path = FiveMinuteNoteTests;
 			sourceTree = "<group>";
 		};
 		BB25C60B82FB2EEC81A12F20 = {
 			isa = PBXGroup;
 			children = (
 				1A70AF2513D29C9E64806F85 /* FiveMinuteNote */,
+				57E6A45E35481E1B70ADA7D4 /* FiveMinuteNoteTests */,
 				52568EB341D3B9D76A03142E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +83,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2E8FD9FB60DDE2378E4DCFDB /* FiveMinuteNoteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F71DBD120655CB07C70A74F3 /* Build configuration list for PBXNativeTarget "FiveMinuteNoteTests" */;
+			buildPhases = (
+				E6F62A40578F320351F6225D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8E1E62A4E68E2D59B4B57CD1 /* PBXTargetDependency */,
+			);
+			name = FiveMinuteNoteTests;
+			packageProductDependencies = (
+			);
+			productName = FiveMinuteNoteTests;
+			productReference = 4A4C9B5BE31C83942E38A7D2 /* FiveMinuteNoteTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		7F390C15CBEF7E3D9DA0F8BC /* FiveMinuteNote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 44CE4ECBFA15BAA57CFDB672 /* Build configuration list for PBXNativeTarget "FiveMinuteNote" */;
@@ -96,6 +143,7 @@
 			projectRoot = "";
 			targets = (
 				7F390C15CBEF7E3D9DA0F8BC /* FiveMinuteNote */,
+				2E8FD9FB60DDE2378E4DCFDB /* FiveMinuteNoteTests */,
 			);
 		};
 /* End PBXProject section */
@@ -122,9 +170,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E6F62A40578F320351F6225D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC17F1A5C19514D7C477E882 /* NoteStateTests.swift in Sources */,
+				E1A35A304D732BDE64C5AF7D /* NoteTextEditorTests.swift in Sources */,
+				A6A8DA3E63D2CD2AB9D2519B /* TimerViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8E1E62A4E68E2D59B4B57CD1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F390C15CBEF7E3D9DA0F8BC /* FiveMinuteNote */;
+			targetProxy = 8C0D2C3B51B26264229E4A35 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		0794EE552CFB5DF4E119E8D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fiveminutenote.FiveMinuteNoteTests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Five Minute Note.app/Contents/MacOS/Five Minute Note";
+			};
+			name = Debug;
+		};
 		4A79B991044392B2A3EC01F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -187,6 +272,25 @@
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
+		};
+		72E590C54724CDABC471050A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fiveminutenote.FiveMinuteNoteTests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Five Minute Note.app/Contents/MacOS/Five Minute Note";
+			};
+			name = Release;
 		};
 		882086C0C9AC91B9DF54C044 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -251,7 +355,7 @@
 				CODE_SIGN_ENTITLEMENTS = FiveMinuteNote/FiveMinuteNote.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = FiveMinuteNote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -260,6 +364,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fiveminutenote.app;
+				PRODUCT_MODULE_NAME = FiveMinuteNote;
+				PRODUCT_NAME = "Five Minute Note";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.9;
 			};
@@ -272,7 +378,7 @@
 				CODE_SIGN_ENTITLEMENTS = FiveMinuteNote/FiveMinuteNote.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = FiveMinuteNote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -281,6 +387,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fiveminutenote.app;
+				PRODUCT_MODULE_NAME = FiveMinuteNote;
+				PRODUCT_NAME = "Five Minute Note";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.9;
 			};
@@ -303,6 +411,15 @@
 			buildConfigurations = (
 				F73AF65FCA607809D90CF693 /* Debug */,
 				93C83A39A37F2AE548F1967D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F71DBD120655CB07C70A74F3 /* Build configuration list for PBXNativeTarget "FiveMinuteNoteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0794EE552CFB5DF4E119E8D4 /* Debug */,
+				72E590C54724CDABC471050A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -3,9 +3,6 @@ import Carbon.HIToolbox
 
 // MARK: - Hardcoded Config
 let defaultTimerMinutes: Int = 5
-// Hotkey: Cmd+Shift+Space
-let hotkeyModifiers: CGEventFlags = [.maskCommand, .maskShift]
-let hotkeyKeyCode: Int64 = Int64(kVK_Space)
 
 @main
 struct FiveMinuteNoteApp: App {
@@ -22,36 +19,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var noteWindow: NotePanel?
     var noteState = NoteState.shared
     private var iconTimer: Timer?
-    private var eventTap: CFMachPort?
-    private var runLoopSource: CFRunLoopSource?
-    private var accessibilityPollTimer: Timer?
+    private var hotKeyRef: EventHotKeyRef?
+    private var eventHandlerRef: EventHandlerRef?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Hide from Dock (belt-and-suspenders with Info.plist LSUIElement)
         NSApp.setActivationPolicy(.accessory)
 
         setupStatusItem()
-        requestAccessibilityAndSetupHotKey()
+        setupGlobalHotKey()
 
         // Show window on first launch
         showNoteWindow()
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        // #7: Clean up all resources
         iconTimer?.invalidate()
         iconTimer = nil
-        accessibilityPollTimer?.invalidate()
-        accessibilityPollTimer = nil
 
-        if let tap = eventTap {
-            CGEvent.tapEnable(tap: tap, enable: false)
+        if let ref = hotKeyRef {
+            UnregisterEventHotKey(ref)
+            hotKeyRef = nil
         }
-        if let source = runLoopSource {
-            CFRunLoopRemoveSource(CFRunLoopGetCurrent(), source, .commonModes)
+        if let handler = eventHandlerRef {
+            RemoveEventHandler(handler)
+            eventHandlerRef = nil
         }
-        eventTap = nil
-        runLoopSource = nil
     }
 
     // MARK: - Status Item
@@ -118,16 +111,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let image = drawPieIcon(fraction: fraction)
             button.image = image
         } else {
-            // Static hourglass icon
-            let config = NSImage.SymbolConfiguration(pointSize: 14, weight: .medium)
-            let image = NSImage(systemSymbolName: "hourglass", accessibilityDescription: "Five Minute Note")
-            button.image = image?.withSymbolConfiguration(config)
+            // Static "5" icon
+            button.image = drawFiveIcon()
 
             // No active note or past the pie animation window — stop ticking
             if !state.hasActiveNote {
                 stopIconTimer()
             }
         }
+    }
+
+    func drawFiveIcon() -> NSImage {
+        let size = NSSize(width: 18, height: 18)
+        let image = NSImage(size: size, flipped: false) { rect in
+            let font = NSFont.systemFont(ofSize: 14, weight: .bold)
+            let attrs: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .foregroundColor: NSColor.black,
+            ]
+            let str = NSAttributedString(string: "5", attributes: attrs)
+            let textSize = str.size()
+            let x = (rect.width - textSize.width) / 2
+            let y = (rect.height - textSize.height) / 2
+            str.draw(at: NSPoint(x: x, y: y))
+            return true
+        }
+        image.isTemplate = true
+        return image
     }
 
     // #12: Draw with solid black, let isTemplate handle appearance adaptation
@@ -165,80 +175,59 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return image
     }
 
-    // MARK: - Global Hot Key (CGEvent tap with Accessibility prompt)
-    func requestAccessibilityAndSetupHotKey() {
-        // Prompt for Accessibility permission if not yet granted
-        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
-        let trusted = AXIsProcessTrustedWithOptions(options)
-
-        if trusted {
-            setupGlobalHotKey()
-        } else {
-            // Poll until permission is granted
-            accessibilityPollTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
-                if AXIsProcessTrusted() {
-                    timer.invalidate()
-                    self?.accessibilityPollTimer = nil
-                    self?.setupGlobalHotKey()
-                }
-            }
-        }
-    }
-
+    // MARK: - Global Hot Key (Carbon RegisterEventHotKey — no Accessibility permission needed)
     func setupGlobalHotKey() {
-        let mask: CGEventMask = (1 << CGEventType.keyDown.rawValue)
+        var eventType = EventTypeSpec(
+            eventClass: OSType(kEventClassKeyboard),
+            eventKind: UInt32(kEventHotKeyPressed)
+        )
 
-        guard let tap = CGEvent.tapCreate(
-            tap: .cgSessionEventTap,
-            place: .headInsertEventTap,
-            options: .defaultTap,
-            eventsOfInterest: mask,
-            callback: { (proxy, type, event, refcon) -> Unmanaged<CGEvent>? in
-                // #1: Use passUnretained for pass-through to avoid CGEvent leak
-                guard let refcon = refcon else { return Unmanaged.passUnretained(event) }
-                let delegate = Unmanaged<AppDelegate>.fromOpaque(refcon).takeUnretainedValue()
-                return delegate.handleGlobalKeyEvent(proxy: proxy, type: type, event: event)
+        let selfPtr = Unmanaged.passUnretained(self).toOpaque()
+        let status = InstallEventHandler(
+            GetApplicationEventTarget(),
+            { (_: EventHandlerCallRef?, event: EventRef?, userData: UnsafeMutableRawPointer?) -> OSStatus in
+                guard let event = event, let userData = userData else {
+                    return OSStatus(eventNotHandledErr)
+                }
+                var hotKeyID = EventHotKeyID()
+                let err = GetEventParameter(
+                    event,
+                    EventParamName(kEventParamDirectObject),
+                    EventParamType(typeEventHotKeyID),
+                    nil,
+                    MemoryLayout<EventHotKeyID>.size,
+                    nil,
+                    &hotKeyID
+                )
+                guard err == noErr else { return OSStatus(eventNotHandledErr) }
+
+                let delegate = Unmanaged<AppDelegate>.fromOpaque(userData).takeUnretainedValue()
+                DispatchQueue.main.async {
+                    delegate.toggleNoteWindow()
+                }
+                return noErr
             },
-            userInfo: Unmanaged.passUnretained(self).toOpaque()
-        ) else {
-            print("Failed to create event tap")
-            return
-        }
+            1,
+            &eventType,
+            selfPtr,
+            &eventHandlerRef
+        )
 
-        self.eventTap = tap
-        let source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
-        self.runLoopSource = source
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), source, .commonModes)
-        CGEvent.tapEnable(tap: tap, enable: true)
-    }
+        guard status == noErr else { return }
 
-    // #1: passUnretained for all pass-through returns
-    func handleGlobalKeyEvent(proxy: CGEventTapProxy, type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
-        // Re-enable tap if it gets disabled by the system
-        if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
-            if let tap = eventTap {
-                CGEvent.tapEnable(tap: tap, enable: true)
-            }
-            return Unmanaged.passUnretained(event)
-        }
-
-        let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
-        let flags = event.flags
-
-        // Check for Cmd+Shift+Space
-        let hasCmd = flags.contains(.maskCommand)
-        let hasShift = flags.contains(.maskShift)
-        let hasCtrl = flags.contains(.maskControl)
-        let hasOpt = flags.contains(.maskAlternate)
-
-        if keyCode == hotkeyKeyCode && hasCmd && hasShift && !hasCtrl && !hasOpt {
-            DispatchQueue.main.async { [weak self] in
-                self?.toggleNoteWindow()
-            }
-            return nil // Consume the event
-        }
-
-        return Unmanaged.passUnretained(event)
+        // Register Cmd+Shift+Space
+        let hotKeyID = EventHotKeyID(
+            signature: OSType(0x464D4E45), // "FMNE"
+            id: 1
+        )
+        RegisterEventHotKey(
+            UInt32(kVK_Space),
+            UInt32(cmdKey | shiftKey),
+            hotKeyID,
+            GetApplicationEventTarget(),
+            0,
+            &hotKeyRef
+        )
     }
 
     // MARK: - Window Management

@@ -27,7 +27,23 @@ targets:
       base:
         CODE_SIGN_IDENTITY: "-"
         PRODUCT_BUNDLE_IDENTIFIER: com.fiveminutenote.app
+        PRODUCT_NAME: "Five Minute Note"
+        PRODUCT_MODULE_NAME: FiveMinuteNote
         MACOSX_DEPLOYMENT_TARGET: "13.0"
         SWIFT_VERSION: "5.9"
-        ENABLE_APP_SANDBOX: "YES"
+        ENABLE_APP_SANDBOX: "NO"
         ENABLE_HARDENED_RUNTIME: "YES"
+  FiveMinuteNoteTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: FiveMinuteNoteTests
+    dependencies:
+      - target: FiveMinuteNote
+    settings:
+      base:
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        SWIFT_VERSION: "5.9"
+        GENERATE_INFOPLIST_FILE: "YES"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Five Minute Note.app/Contents/MacOS/Five Minute Note"

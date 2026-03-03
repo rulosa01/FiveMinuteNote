@@ -10,10 +10,12 @@ class NoteState: ObservableObject {
 
     private var timer: Timer?
     // #3: Date-based timer — record when the deadline is, compute remaining on each tick
-    private var deadline: Date?
-    private let maxTimerDuration: Double = 24 * 60 * 60 // 24 hours
+    // internal for testability
+    var deadline: Date?
+    let maxTimerDuration: Double = 24 * 60 * 60 // 24 hours
 
-    private init() {}
+    // internal (not private) so the test target can create isolated instances
+    init() {}
 
     var defaultDuration: Double {
         Double(defaultTimerMinutes * 60)
