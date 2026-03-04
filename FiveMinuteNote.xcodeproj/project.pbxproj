@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		256AAC62F47CCE11E044D70A /* NoteState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F140AFFC3A829903E5FFE1D1 /* NoteState.swift */; };
+		62162FDB39EC0E8FF3E31E41 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187FB4835157846DCB0615D /* PreferencesManager.swift */; };
 		88056FA5AC4C04148E5426D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4381242E302D3F69814DCDD7 /* Assets.xcassets */; };
 		A6A8DA3E63D2CD2AB9D2519B /* TimerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8B65BF19F6BD6C5A1B96CE /* TimerViewTests.swift */; };
 		D27C277251C17150C6E41296 /* FiveMinuteNoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A52AA5AF26C4B8AB8AEA85 /* FiveMinuteNoteApp.swift */; };
@@ -35,6 +36,7 @@
 		95AA0AC80F99E898E7D3D760 /* NoteContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteContentView.swift; sourceTree = "<group>"; };
 		96D3104AC2A16E52AE910B42 /* FiveMinuteNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FiveMinuteNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9AC016B18CA5F15F90F7140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C187FB4835157846DCB0615D /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		CB8B65BF19F6BD6C5A1B96CE /* TimerViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewTests.swift; sourceTree = "<group>"; };
 		F140AFFC3A829903E5FFE1D1 /* NoteState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,6 +50,7 @@
 				B9AC016B18CA5F15F90F7140 /* Info.plist */,
 				95AA0AC80F99E898E7D3D760 /* NoteContentView.swift */,
 				F140AFFC3A829903E5FFE1D1 /* NoteState.swift */,
+				C187FB4835157846DCB0615D /* PreferencesManager.swift */,
 			);
 			path = FiveMinuteNote;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 				D27C277251C17150C6E41296 /* FiveMinuteNoteApp.swift in Sources */,
 				D536BBDB54A874BC64624872 /* NoteContentView.swift in Sources */,
 				256AAC62F47CCE11E044D70A /* NoteState.swift in Sources */,
+				62162FDB39EC0E8FF3E31E41 /* PreferencesManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

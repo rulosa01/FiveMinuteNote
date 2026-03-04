@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NoteContentView: View {
     @EnvironmentObject var noteState: NoteState
+    @EnvironmentObject var prefs: PreferencesManager
     @State private var isHovering = false
     var onClose: () -> Void
     var onNoteDied: () -> Void
@@ -58,7 +59,7 @@ struct NoteContentView: View {
         }
         .ignoresSafeArea()
         .frame(minWidth: 300, minHeight: 200)
-        .background(Color(nsColor: .windowBackgroundColor))
+        .background(Color(nsColor: prefs.windowColor))
         .onHover { hovering in
             withAnimation(.easeInOut(duration: 0.15)) {
                 isHovering = hovering
