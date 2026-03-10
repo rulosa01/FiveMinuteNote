@@ -4,7 +4,7 @@ A macOS menubar scratchpad that self-destructs. Open it, dump text, walk away â€
 
 ## How It Works
 
-- **`Cmd+Shift+Space`** summons the window from anywhere
+- **`Cmd+Option+Control+Space`** summons the window from anywhere
 - Type whatever you need â€” every keystroke resets the 5-minute timer
 - Stop typing and the countdown begins
 - When the timer hits zero, the window closes and your text is gone. No file saved, no trace.
@@ -14,7 +14,7 @@ A macOS menubar scratchpad that self-destructs. Open it, dump text, walk away â€
 
 | Action | What it does |
 |---|---|
-| `Cmd+Shift+Space` | Toggle the window |
+| `Cmd+Option+Control+Space` | Toggle the window |
 | `Escape` | Hide the window (text survives) |
 | `+5m` button | Extend the timer by 5 minutes |
 | Trash button | Destroy the note immediately |
@@ -75,10 +75,10 @@ Edit the top of `FiveMinuteNote/FiveMinuteNoteApp.swift`:
 
 ```swift
 let defaultTimerMinutes: Int = 5
-let hotkeyModifiers: CGEventFlags = [.maskCommand, .maskShift]
+let hotkeyModifiers: CGEventFlags = [.maskCommand, .maskOption, .maskControl]
 let hotkeyKeyCode: Int64 = Int64(kVK_Space)
 ```
 
 ## Known Quirks
 
-- From Chromium-based apps (Chrome, VS Code), the hotkey requires a double-tap because Chromium intercepts `Cmd+Shift+Space` for its own parameter hints. Works on the first press from everything else.
+- From Chromium-based apps (Chrome, VS Code), the hotkey may require a double-tap if the chosen shortcut conflicts with the app's built-in bindings. The default `Cmd+Option+Control+Space` avoids most conflicts.

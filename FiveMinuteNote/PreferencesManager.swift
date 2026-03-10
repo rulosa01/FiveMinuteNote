@@ -27,7 +27,7 @@ class PreferencesManager: ObservableObject {
             if UserDefaults.standard.object(forKey: Keys.hotkeyModifiers) != nil {
                 return UInt32(UserDefaults.standard.integer(forKey: Keys.hotkeyModifiers))
             }
-            return UInt32(cmdKey | shiftKey)
+            return UInt32(cmdKey | optionKey | controlKey)
         }
         set { UserDefaults.standard.set(Int(newValue), forKey: Keys.hotkeyModifiers) }
     }
